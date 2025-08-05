@@ -31,7 +31,7 @@ public class AuthController {
             log.info("JWT Subject: {}", jwt.getSubject());
             log.info("JWT Claims: {}", jwt.getClaims());
         } else {
-            log.warn("JWT is null in login endpoint");
+            log.warn("JWT is null in login endpoint...");
         }
         
         UserInfoResponse userInfo = authService.loginOrRegister(jwt);
