@@ -9,6 +9,7 @@ spec:
       command: ["/bin/sh", "-c"]
       args:
         - >
+          mkdir -p /data;
           while true; do
             echo "$(date)" >> /data/time.txt;
             sleep 20;

@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database-deployment # 1) 이름 변경
+  labels:
+    app: database # 2) 라벨 변경
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: database # 3) 셀렉터도 동일한 라벨로
+  template:
+    metadata:
+      labels:
+        app: database # 4) Pod 템플릿 라벨도 동일하게
+    spec:
+      containers:
+        - name: postgres # (container name 은 그대로 두셔도 무방)
+          image: postgres:14-alpine
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: "ddoddo_market_db"
+            - name: POSTGRES_USER
+              value: "root"
+            - name: POSTGRES_PASSWORD
+              value: "pass1234"

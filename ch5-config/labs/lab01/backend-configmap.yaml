@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+data:
+  # 데이터베이스 접속 정보 (비밀번호 제외)
+  SPRING_DATASOURCE_URL: "jdbc:postgresql://database-service:5432/ddoddo_market_db"
+  SPRING_DATASOURCE_USERNAME: "root"
+
+  # JPA 설정
+  SPRING_JPA_HIBERNATE_DDL_AUTO: "update"
+  SPRING_JPA_SHOW_SQL: "true"
+
+  # OAuth2 JWT JWK URI
+  SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI: "https://ezbvfpuceouqqiwdrihw.supabase.co"
+
+  # Cloudflare R2 공개 정보
+  CLOUDFLARE_R2_BUCKET_NAME: "ddoddo-market"
+  CLOUDFLARE_ACCOUNT_ID: "be65506c08555a744191cb629a4ec53a"
+  CLOUDFLARE_R2_PUBLIC_URL: "https://pub-68bfbfd7e003412091f3dfab16459317.r2.dev"

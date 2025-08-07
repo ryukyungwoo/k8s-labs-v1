@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ddoddo-db
+spec:
+  serviceName: "ddoddo-db-svc"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ddoddo-db
+  template:
+    metadata:
+      labels:
+        app: ddoddo-db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:13
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - secretRef:
+                name: ddoddo-db-secret
+          volumeMounts:
+            - name: ddoddo-db-data
+              mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:
+    - metadata:
+        - name: ddoddo-db-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: "standard"
+        resources:
+          requests:
+            storage: 1Gi

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+# 1. kind를 Deployment에서 StatefulSet으로 변경
+kind: StatefulSet
+metadata:
+  name: todo-db
+spec:
+  # 2. serviceName을 추가하여 위에서 만든 Headless Service와 연결
+  serviceName: "todo-db-svc"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todo-db
+  template:
+    metadata:
+      labels:
+        app: todo-db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:13
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - secretRef:
+                name: todo-db-secret
+          # 3. volumeMounts 추가: 컨테이너의 데이터 디렉토리에 볼륨을 연결
+          volumeMounts:
+            - name: todo-db-data # 아래 volumeClaimTemplates의 이름과 일치
+              mountPath: /var/lib/postgresql/data
+  # 4. volumeClaimTemplates 추가: 각 Pod을 위한 PVC 템플릿 정의
+  volumeClaimTemplates:
+    - metadata:
+        name: todo-db-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: "standard" # ex02에서 확인한 StorageClass
+        resources:
+          requests:
+            storage: 1Gi

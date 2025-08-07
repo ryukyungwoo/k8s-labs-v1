@@ -41,7 +41,7 @@ curl localhost:8000
 # 1. default.conf 파일의 내용을 수정합니다.
 # "Hello, ConfigMap Volume!" -> "Volume Updated!"
 # (아래 명령어로 파일 내용을 간단히 덮어쓸 수 있습니다.)
-echo 'server { listen 80; server_name localhost; location / { return 200 "Volume Updated!\n"; } }' > default.conf
+echo 'server { listen 80; server_name localhost; location / { return 200 "hello world!\n"; } }' > default.conf
 
 
 # 2. 수정된 파일 내용으로 ConfigMap을 교체합니다.
